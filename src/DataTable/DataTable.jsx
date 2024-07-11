@@ -8,7 +8,6 @@ import {
   TableBody,
   Paper,
   TablePagination,
-  CircularProgress,
   TableSortLabel,
 } from "@mui/material";
 
@@ -76,23 +75,15 @@ const DataTable = ({ data, totalRecords, isLoading }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {isLoading ? (
-              <TableRow>
-                <TableCell colSpan={columns.length} align="center">
-                  <CircularProgress size={24} />
-                </TableCell>
-              </TableRow>
-            ) : (
-              sortedData
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
-                  <TableRow key={index}>
-                    {columns.map((column, columnIndex) => (
-                      <TableCell key={columnIndex}>{row[column]}</TableCell>
-                    ))}
-                  </TableRow>
-                ))
-            )}
+            {sortedData
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => (
+                <TableRow key={index}>
+                  {columns.map((column, columnIndex) => (
+                    <TableCell key={columnIndex}>{row[column]}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
