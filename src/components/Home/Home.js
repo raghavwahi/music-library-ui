@@ -1,35 +1,24 @@
-import React, { useEffect, useState } from "react";
-import useHttp from "../../hooks/use-http";
+import React, { useEffect } from "react";
 import DataTable from "../../DataTable/DataTable";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "../../store/slices/dataSlice";
 
 const Home = () => {
-  const { isLoading, error, sendRequest: sendDataRequest } = useHttp();
-
-  const [data, setData] = useState([]);
-  const [totalCount, setTotalCount] = useState(0);
-
-  const storeData = (data) => {
-    setData(() => [...data.data]);
-    setTotalCount(data.total);
-  };
+  const dispatch = useDispatch();
+  const {
+    data,
+    count: totalCount,
+    status,
+  } = useSelector((state) => state.data);
 
   useEffect(() => {
-    sendDataRequest(
-      {
-        url: `${process.env.REACT_APP_API_URL}/songs/?limit=-1`,
-      },
-      storeData
-    );
-  }, [sendDataRequest]);
+    dispatch(fetchData());
+  }, [dispatch]);
 
   return (
     <>
-      {!isLoading && (
-        <DataTable
-          data={data}
-          totalRecords={totalCount}
-          isLoading={isLoading}
-        />
+      {status === "success" && (
+        <DataTable data={data} totalRecords={totalCount} />
       )}
     </>
   );

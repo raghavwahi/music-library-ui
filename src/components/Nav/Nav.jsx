@@ -1,8 +1,8 @@
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
-
-import { DarkMode, LightMode } from "@mui/icons-material";
-
 import React from "react";
+import { Link } from "react-router-dom";
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { DarkMode, LightMode } from "@mui/icons-material";
+import { Home as HomeIcon, Analytics } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../store/slices/themeSlice";
 
@@ -18,6 +18,33 @@ const Nav = () => {
           Music Library
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
+        <Button
+          component={Link}
+          to="/"
+          sx={{ mr: 3 }}
+          color="inherit"
+          startIcon={<HomeIcon />}
+        >
+          Home
+        </Button>
+        <Button
+          component={Link}
+          to="/searchsong"
+          sx={{ mr: 3 }}
+          color="inherit"
+          startIcon={<HomeIcon />}
+        >
+          Search Song
+        </Button>
+        <Button
+          component={Link}
+          to="/charts"
+          sx={{ mr: 3 }}
+          color="inherit"
+          startIcon={<Analytics />}
+        >
+          Charts
+        </Button>
         <Button
           color="inherit"
           onClick={() => {
