@@ -1,22 +1,26 @@
-// src/App.js
-import React, { useState } from "react";
+import React from "react";
 import { createTheme, ThemeProvider, CssBaseline, Button } from "@mui/material";
-import { lightTheme, darkTheme } from "./theme/theme";
-import Home from "./components/Home/Home"; // Assuming you have a Home component
+import { lightTheme, darkTheme } from "./themes/themes";
+import { useDispatch, useSelector } from "react-redux";
+import Home from "./components/Home/Home";
+import { toggleTheme } from "./store/slices/themeSlice";
 
 const App = () => {
-  const [theme, setTheme] = useState("light");
+  const dispatch = useDispatch();
+  const themeMode = useSelector((state) => state.theme.mode);
 
-  const themeConfig = createTheme(theme === "light" ? lightTheme : darkTheme);
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
+  const themeconfig = createTheme(
+    themeMode === "light" ? lightTheme : darkTheme
+  );
 
   return (
-    <ThemeProvider theme={themeConfig}>
+    <ThemeProvider theme={themeconfig}>
       <CssBaseline />
-      <Button onClick={toggleTheme} variant="contained" color="primary">
+      <Button
+        onClick={() => dispatch(toggleTheme())}
+        variant="contained"
+        color="primary"
+      >
         Toggle Theme
       </Button>
       <Home />
