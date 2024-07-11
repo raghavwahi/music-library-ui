@@ -16,13 +16,12 @@ const Home = () => {
   useEffect(() => {
     sendDataRequest(
       {
-        url: `${process.env.REACT_APP_API_URL}?limit=-1`,
+        url: `${process.env.REACT_APP_API_URL}/songs/?limit=-1`,
       },
       storeData
     );
   }, [sendDataRequest]);
 
-  console.log(process.env.REACT_APP_API_URL);
   return (
     <>
       {!isLoading && (
