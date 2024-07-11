@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { lightTheme, darkTheme } from "./themes/themes";
 import { useSelector } from "react-redux";
 import Home from "./components/Home/Home";
-import Nav from "./components/Home/Nav/Nav";
+import Nav from "./components/Nav/Nav";
 import { BrowserRouter } from "react-router-dom";
 
 const App = () => {

@@ -1,17 +1,38 @@
-import React from "react";
-import { Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import useHttp from "../../hooks/use-http";
+import DataTable from "../../DataTable/DataTable";
 
 const Home = () => {
+  const { isLoading, error, sendRequest: sendDataRequest } = useHttp();
+
+  const [data, setData] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const storeData = (data) => {
+    setData(() => [...data.data]);
+    setTotalCount(data.total);
+  };
+
+  useEffect(() => {
+    sendDataRequest(
+      {
+        url: `${process.env.REACT_APP_API_URL}?limit=-1`,
+      },
+      storeData
+    );
+  }, [sendDataRequest]);
+
+  console.log(process.env.REACT_APP_API_URL);
   return (
-    <div>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Welcome to the Themed Application
-      </Typography>
-      <Typography variant="body1">
-        This is a sample application to demonstrate theme switching using
-        Material-UI.
-      </Typography>
-    </div>
+    <>
+      {!isLoading && (
+        <DataTable
+          data={data}
+          totalRecords={totalCount}
+          isLoading={isLoading}
+        />
+      )}
+    </>
   );
 };
 
