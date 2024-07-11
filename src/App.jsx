@@ -1,12 +1,12 @@
 import React from "react";
-import { createTheme, ThemeProvider, CssBaseline, Button } from "@mui/material";
+import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { lightTheme, darkTheme } from "./themes/themes";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Home from "./components/Home/Home";
-import { toggleTheme } from "./store/slices/themeSlice";
+import Nav from "./components/Home/Nav/Nav";
+import { BrowserRouter } from "react-router-dom";
 
 const App = () => {
-  const dispatch = useDispatch();
   const themeMode = useSelector((state) => state.theme.mode);
 
   const themeconfig = createTheme(
@@ -16,14 +16,10 @@ const App = () => {
   return (
     <ThemeProvider theme={themeconfig}>
       <CssBaseline />
-      <Button
-        onClick={() => dispatch(toggleTheme())}
-        variant="contained"
-        color="primary"
-      >
-        Toggle Theme
-      </Button>
-      <Home />
+      <BrowserRouter>
+        <Nav />
+        <Home />
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
