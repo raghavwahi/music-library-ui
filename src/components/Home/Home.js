@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import useHttp from "../../hooks/use-http";
 import DataTable from "../../DataTable/DataTable";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "../../store/slices/dataSlice";
 
 const Home = () => {
   const { isLoading, error, sendRequest: sendDataRequest } = useHttp();
-
-  const [data, setData] = useState([]);
-  const [totalCount, setTotalCount] = useState(0);
-
-  const storeData = (data) => {
-    setData(() => [...data.data]);
-    setTotalCount(data.total);
-  };
+  const dispatch = useDispatch();
+  const { data, count: totalCount } = useSelector((state) => state.data);
 
   useEffect(() => {
+    const storeData = (data) => {
+      dispatch(fetchData(data));
+    };
+
     sendDataRequest(
       {
         url: `${process.env.REACT_APP_API_URL}/songs/?limit=-1`,
       },
       storeData
     );
-  }, [sendDataRequest]);
+  }, [sendDataRequest, dispatch]);
 
   return (
     <>
