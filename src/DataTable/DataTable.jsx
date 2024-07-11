@@ -10,6 +10,7 @@ import {
   TablePagination,
   TableSortLabel,
 } from "@mui/material";
+import StarRating from "../components/StarRating/StarRating";
 
 const DataTable = ({ data, totalRecords, isLoading }) => {
   const [page, setPage] = useState(0);
@@ -55,6 +56,16 @@ const DataTable = ({ data, totalRecords, isLoading }) => {
     });
   }
 
+  const handleRatingUpdate = (newRating, rowIndex) => {
+    // Mock API call to update the rating, replace with your actual API call
+    const updatedData = [...data];
+    updatedData[page * rowsPerPage + rowIndex].rating = newRating;
+    // Replace with your actual API logic to update the rating
+    console.log(`Updating rating ${newRating} for row at index ${rowIndex}`);
+    // Assuming you have a function to update data in parent component
+    // updateData(updatedData);
+  };
+
   return (
     <Paper>
       <TableContainer>
@@ -77,10 +88,22 @@ const DataTable = ({ data, totalRecords, isLoading }) => {
           <TableBody>
             {sortedData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => (
-                <TableRow key={index}>
+              .map((row, rowIndex) => (
+                <TableRow key={rowIndex}>
                   {columns.map((column, columnIndex) => (
-                    <TableCell key={columnIndex}>{row[column]}</TableCell>
+                    <TableCell key={columnIndex}>
+                      {column === "rating" ? (
+                        <StarRating
+                          initialRating={row[column]}
+                          onUpdateRating={(newRating) =>
+                            handleRatingUpdate(newRating, rowIndex)
+                          }
+                          data={row}
+                        />
+                      ) : (
+                        row[column]
+                      )}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))}
