@@ -5,6 +5,7 @@ import ScatterChartComponent from "../ScatterChartComponent/ScatterChartComponen
 import HistogramComponent from "../HistogramComponent/HistogramComponent";
 import BarChartComponent from "../BarChartComponent/BarChartComponent";
 import { fetchData } from "next-auth/client/_utils";
+import { Grid, Typography } from "@mui/material";
 
 const Charts = () => {
   const dispatch = useDispatch();
@@ -21,16 +22,36 @@ const Charts = () => {
   return (
     <>
       {status === "success" && (
-        <>
-          <ScatterChartComponent data={data} />
-          <HistogramComponent data={data} />
-          <BarChartComponent
-            data={data}
-            dataKey="acousticness"
-            name="Acousticness"
-          />
-          <BarChartComponent data={data} dataKey="tempo" name="Tempo" />
-        </>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Typography variant="h6" gutterBottom>
+              Scatter Chart
+            </Typography>
+            <ScatterChartComponent data={data} />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h6" gutterBottom>
+              Histogram
+            </Typography>
+            <HistogramComponent data={data} />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h6" gutterBottom>
+              Acousticness Bar Chart
+            </Typography>
+            <BarChartComponent
+              data={data}
+              dataKey="acousticness"
+              name="Acousticness"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h6" gutterBottom>
+              Tempo Bar Chart
+            </Typography>
+            <BarChartComponent data={data} dataKey="tempo" name="Tempo" />
+          </Grid>
+        </Grid>
       )}
     </>
   );
