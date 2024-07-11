@@ -4,7 +4,7 @@ import { DarkMode, LightMode } from "@mui/icons-material";
 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../../../store/slices/themeSlice";
+import { toggleTheme } from "../../store/slices/themeSlice";
 
 const Nav = () => {
   const dispatch = useDispatch();
