@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import useHttp from "../../hooks/use-http";
 
-const StarRating = ({ data, initialRating, onUpdateRating }) => {
-  console.log(data);
-  const [rating, setRating] = useState(initialRating);
+const StarRating = ({ data }) => {
+  const [rating, setRating] = useState(data.rating);
   const { sendRequest: sendDataRequest } = useHttp();
 
-  const handleStarClick = () => {
-    setRating(onUpdateRating);
+  const handleStarClick = (star) => {
+    setRating(star);
     sendDataRequest(
       {
         url: `${process.env.REACT_APP_API_URL}/songs/${data.id}`,
         method: "PUT",
-        body: { ...data, rating: onUpdateRating },
+        body: { ...data, rating: star },
+        headers: { "Content-Type": "application/json" },
       },
       () => {}
     );
@@ -33,7 +33,11 @@ const StarRating = ({ data, initialRating, onUpdateRating }) => {
 
 const Star = ({ filled, onClick }) => (
   <span
-    style={{ cursor: "pointer", color: filled ? "gold" : "gray" }}
+    style={{
+      cursor: "pointer",
+      color: filled ? "gold" : "gray",
+      fontSize: "24px",
+    }}
     onClick={onClick}
   >
     ★
