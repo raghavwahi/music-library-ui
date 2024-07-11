@@ -14,6 +14,8 @@ const Home = () => {
       dispatch(fetchData(data));
     };
 
+    console.log(data);
+
     sendDataRequest(
       {
         url: `${process.env.REACT_APP_API_URL}/songs/?limit=-1`,
