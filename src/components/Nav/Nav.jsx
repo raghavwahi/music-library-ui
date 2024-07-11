@@ -29,6 +29,15 @@ const Nav = () => {
         </Button>
         <Button
           component={Link}
+          to="/searchsong"
+          sx={{ mr: 3 }}
+          color="inherit"
+          startIcon={<HomeIcon />}
+        >
+          Search Song
+        </Button>
+        <Button
+          component={Link}
           to="/charts"
           sx={{ mr: 3 }}
           color="inherit"
